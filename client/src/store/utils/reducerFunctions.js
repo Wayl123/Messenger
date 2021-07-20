@@ -81,3 +81,12 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     }
   });
 };
+
+export const reorderConversationToTop = (state, conversations, conversationId) => {
+  const orderState = [ ...state ];
+  const index = orderState.map(convo => convo.id).indexOf(conversationId);
+  if (index > 0) {
+    orderState.unshift(orderState.splice(index, 1)[0]);
+  }
+  return orderState;
+}
