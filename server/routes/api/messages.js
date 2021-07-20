@@ -52,7 +52,7 @@ router.put("/", async (req, res, next) => {
     }
     const { senderId, conversationId } = req.body
 
-    const messages = await Message.update(
+    await Message.update(
       {
         read: true
       },
@@ -63,7 +63,6 @@ router.put("/", async (req, res, next) => {
         },
       }
     );
-    res.json({ messages });
   } catch (error) {
     next(error);
   }
