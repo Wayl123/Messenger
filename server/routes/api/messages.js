@@ -26,9 +26,7 @@ router.post("/", async (req, res, next) => {
       })
 
       if (!conversation) {
-        const error = new Error("Invalid sender for this conversation")
-        error.status = 400
-        throw error
+        return res.sendStatus(403)
       }
 
       const message = await Message.create({ senderId, text, conversationId });
