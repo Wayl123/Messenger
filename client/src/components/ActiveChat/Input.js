@@ -3,6 +3,7 @@ import { FormControl, FilledInput } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import { reorderConversation } from "../../store/conversations";
 
 const styles = {
   root: {
@@ -41,6 +42,7 @@ class Input extends Component {
       sender: this.props.conversationId ? null : this.props.user,
     };
     await this.props.postMessage(reqBody);
+    await this.props.reorderConversation(this.props.conversations, this.props.conversationId)
     this.setState({
       text: "",
     });
@@ -76,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     postMessage: (message) => {
       dispatch(postMessage(message));
+    },
+    reorderConversation: (conversations, conversationId) => {
+      dispatch(reorderConversation(conversations, conversationId))
     },
   };
 };
