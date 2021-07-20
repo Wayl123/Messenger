@@ -23,7 +23,8 @@ const styles = {
 class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
-    await updateReadMessage(conversation)
+    console.log(conversation)
+    await updateReadMessage(conversation);
   };
 
   render() {
