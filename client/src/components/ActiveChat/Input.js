@@ -41,6 +41,7 @@ class Input extends Component {
       sender: this.props.conversationId ? null : this.props.user,
     };
     await this.props.postMessage(reqBody);
+    reorderConversation(this.props)
     this.setState({
       text: "",
     });
@@ -62,6 +63,14 @@ class Input extends Component {
         </FormControl>
       </form>
     );
+  }
+}
+
+const reorderConversation = (props) => {
+  let conversations = props.conversations;
+  const index = conversations.map(conv => conv.id).indexOf(props.conversationId);
+  if (index > 0) {
+    conversations.unshift(conversations.splice(index, 1)[0]);
   }
 }
 
