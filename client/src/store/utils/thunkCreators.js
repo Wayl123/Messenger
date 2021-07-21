@@ -129,19 +129,12 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
   }
 };
 
-export const updateReadMessage = async (body) => {
+export const updateReadMessage = (body) => async (dispatch) => {
   try {
     if (body.messages.some(e => (e.senderId === body.otherUser.id) && (!e.read))) {
       await axios.put("/api/messages", {senderId: body.otherUser.id, conversationId: body.id});
+      dispatch(readConversation(body.id))
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const readMessage = (body) => async (dispatch) => {
-  try {
-    dispatch(readConversation(body));
   } catch (error) {
     console.log(error);
   }

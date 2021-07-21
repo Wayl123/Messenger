@@ -45,7 +45,7 @@ class Input extends Component {
     await this.props.postMessage(reqBody);
     await this.props.reorderConversation(this.props.conversationId);
     const conversation = this.props.conversations.filter(convo => convo.id === this.props.conversationId)[0];
-    await updateReadMessage(conversation);
+    await this.props.updateReadMessage(conversation);
     this.setState({
       text: "",
     });
@@ -84,6 +84,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     reorderConversation: (conversationId) => {
       dispatch(reorderConversation(conversationId))
+    },
+    updateReadMessage: (conversation) => {
+      dispatch(updateReadMessage(conversation))
     },
   };
 };

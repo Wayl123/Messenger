@@ -91,7 +91,6 @@ export const reorderConversationToTop = (state, conversationId) => {
 };
 
 export const resetUnread = (state, conversationId) => {
-  console.log(state)
   return state.map((convo) => {
     if (convo.id === conversationId) {
       const convoCopy = { ...convo };
