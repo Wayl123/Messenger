@@ -38,7 +38,7 @@ const ChatContent = (props) => {
   const classes = useStyles();
 
   const { conversation } = props;
-  const { latestMessageText, otherUser } = conversation;
+  const { latestMessageText, otherUser, unread } = conversation;
 
   return (
     <Box className={classes.root}>
@@ -49,6 +49,14 @@ const ChatContent = (props) => {
         <Typography className={classes.previewText}>
           {latestMessageText}
         </Typography>
+      </Box>
+      <Box>
+        {unread > 0 ?
+          <Typography className={classes.notification}>
+            {unread}
+          </Typography>
+          : <></>
+        }
       </Box>
     </Box>
   );
