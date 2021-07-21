@@ -75,10 +75,7 @@ router.put("/", async (req, res, next) => {
         where: {
           conversationId: conversationId,
           senderId: senderId,
-          [Op.or]: {
-            read: false,
-            read: null,
-          },
+          read: false,
         },
       }
     );
