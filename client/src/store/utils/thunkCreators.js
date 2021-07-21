@@ -22,9 +22,9 @@ export const fetchUser = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/auth/user");
     dispatch(gotUser(data));
-    if (data.id) {
-      socket.emit("go-online", data.id);
-    }
+    // if (data.id) {
+    //   socket.emit("go-online", data.id);
+    // }
   } catch (error) {
     console.error(error);
   } finally {
