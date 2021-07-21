@@ -55,7 +55,7 @@ const ChatContent = (props) => {
           <Typography className={classes.notification}>
             {unread}
           </Typography>
-          : <></>
+          : ""
         }
       </Box>
     </Box>

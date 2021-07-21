@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Conversation, Message } = require("../../db/models");
-const { Op } = require("sequelize");
+const { Op, json } = require("sequelize");
 const onlineUsers = require("../../onlineUsers");
 
 // expects {recipientId, text, conversationId } in body (conversationId will be null if no conversation exists yet)
@@ -78,6 +78,7 @@ router.put("/", async (req, res, next) => {
         },
       }
     );
+    res.json("updated")
   } catch (error) {
     next(error);
   }
