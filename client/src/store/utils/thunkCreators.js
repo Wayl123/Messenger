@@ -73,8 +73,8 @@ export const logout = (id) => async (dispatch) => {
 const initializeUnread = (data, body) => {
   return data.map((convo) => {
     const convoCopy = { ...convo };
-    const unreadCount = convoCopy.messages.filter(e => (e.senderId !== body.id) && (!e.read)).length;
-    convoCopy.unread = unreadCount;
+    const unreadCount = convoCopy.messages.filter(message => (message.senderId !== body.id) && (!message.read)).length;
+    convoCopy.unreadCount = unreadCount;
     return convoCopy
   })
 }
@@ -131,10 +131,8 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
 
 export const updateReadMessage = (body) => async (dispatch) => {
   try {
-    if (body.messages.some(e => (e.senderId === body.otherUser.id) && (!e.read))) {
-      await axios.put("/api/messages", {senderId: body.otherUser.id, conversationId: body.id});
-      dispatch(readConversation(body.id))
-    }
+    await axios.put("/api/messages", {senderId: body.otherUser.id, conversationId: body.id});
+    dispatch(readConversation(body.id))
   } catch (error) {
     console.log(error);
   }

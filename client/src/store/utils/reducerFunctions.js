@@ -94,7 +94,7 @@ export const resetUnread = (state, conversationId) => {
   return state.map((convo) => {
     if (convo.id === conversationId) {
       const convoCopy = { ...convo };
-      convoCopy.unread = 0;
+      convoCopy.unreadCount = 0;
       return convoCopy;
     } else {
       return convo;

@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
 import { reorderConversation } from "../../store/conversations";
-import { updateReadMessage } from "../../store/utils/thunkCreators";
 
 const styles = {
   root: {
@@ -44,8 +43,6 @@ class Input extends Component {
     };
     await this.props.postMessage(reqBody);
     await this.props.reorderConversation(this.props.conversationId);
-    const conversation = this.props.conversations.filter(convo => convo.id === this.props.conversationId)[0];
-    await this.props.updateReadMessage(conversation);
     this.setState({
       text: "",
     });
@@ -84,9 +81,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     reorderConversation: (conversationId) => {
       dispatch(reorderConversation(conversationId))
-    },
-    updateReadMessage: (conversation) => {
-      dispatch(updateReadMessage(conversation))
     },
   };
 };
