@@ -16,7 +16,6 @@ export const addMessageToStore = (state, payload) => {
       const convoCopy = { ...convo };
       convoCopy.messages.unshift(message);
       convoCopy.latestMessageText = message.text;
-
       return convoCopy;
     } else {
       return convo;
@@ -82,11 +81,24 @@ export const addNewConvoToStore = (state, recipientId, message) => {
   });
 };
 
-export const reorderConversationToTop = (state, conversations, conversationId) => {
+export const reorderConversationToTop = (state, conversationId) => {
   const orderState = [ ...state ];
   const index = orderState.map(convo => convo.id).indexOf(conversationId);
   if (index > 0) {
     orderState.unshift(orderState.splice(index, 1)[0]);
   }
   return orderState;
-}
+};
+
+export const resetUnread = (state, conversationId) => {
+  console.log(state)
+  return state.map((convo) => {
+    if (convo.id === conversationId) {
+      const convoCopy = { ...convo };
+      convoCopy.unread = 0;
+      return convoCopy;
+    } else {
+      return convo;
+    }
+  });
+};

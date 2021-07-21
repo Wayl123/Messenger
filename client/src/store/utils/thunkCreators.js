@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  readConversation,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -69,10 +70,20 @@ export const logout = (id) => async (dispatch) => {
 
 // CONVERSATIONS THUNK CREATORS
 
-export const fetchConversations = () => async (dispatch) => {
+const initializeUnread = (data, body) => {
+  return data.map((convo) => {
+    const convoCopy = { ...convo };
+    const unreadCount = convoCopy.messages.filter(e => (e.senderId !== body.id) && (!e.read)).length;
+    convoCopy.unread = unreadCount;
+    return convoCopy
+  })
+}
+
+export const fetchConversations = (body) => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
-    dispatch(gotConversations(data));
+    const updatedData = initializeUnread(data, body)
+    dispatch(gotConversations(updatedData));
   } catch (error) {
     console.error(error);
   }
@@ -123,7 +134,14 @@ export const updateReadMessage = async (body) => {
     if (body.messages.some(e => (e.senderId === body.otherUser.id) && (!e.read))) {
       await axios.put("/api/messages", {senderId: body.otherUser.id, conversationId: body.id});
     }
-    await fetchConversations()
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const readMessage = (body) => async (dispatch) => {
+  try {
+    dispatch(readConversation(body));
   } catch (error) {
     console.log(error);
   }
