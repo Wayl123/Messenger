@@ -42,7 +42,7 @@ class Input extends Component {
       sender: this.props.conversationId ? null : this.props.user,
     };
     await this.props.postMessage(reqBody);
-    await this.props.reorderConversation(this.props.conversations, this.props.conversationId)
+    await this.props.reorderConversation(this.props.conversationId);
     this.setState({
       text: "",
     });
@@ -79,8 +79,8 @@ const mapDispatchToProps = (dispatch) => {
     postMessage: (message) => {
       dispatch(postMessage(message));
     },
-    reorderConversation: (conversations, conversationId) => {
-      dispatch(reorderConversation(conversations, conversationId))
+    reorderConversation: (conversationId) => {
+      dispatch(reorderConversation(conversationId))
     },
   };
 };
