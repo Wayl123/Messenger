@@ -60,7 +60,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // update all unread message from other user to read for a given conversation
-router.put("/", async (req, res, next) => {
+router.put("/read", async (req, res, next) => {
   try {
     if (!req.user) {
       return res.sendStatus(401);
