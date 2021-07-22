@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    marginLeft: 20,
+    marginLeft: theme.spacing(2),
     flexGrow: 1,
   },
   username: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   previewText: {
     fontSize: 12,
-    color: "#9CADC8",
+    color: theme.palette.secondary.sub,
     letterSpacing: -0.17,
   },
   boldText: {
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
   notification: {
     height: 20,
     width: 20,
-    backgroundColor: "#3F92FF",
-    marginRight: 10,
+    backgroundColor: theme.palette.primary.main,
+    marginRight: theme.spacing(2),
     color: "white",
     fontSize: 10,
     letterSpacing: -0.5,

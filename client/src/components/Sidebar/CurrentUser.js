@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { BadgeAvatar } from "./index";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: 44,
     marginTop: 23,
@@ -26,16 +26,16 @@ const useStyles = makeStyles(() => ({
     marginLeft: 17
   },
   ellipsis: {
-    color: "#95A7C4",
+    color: theme.palette.secondary.sub,
     marginRight: 24,
     opacity: 0.5
   }
 }));
 
-const CurrentUser = (props) => {
-  const classes = useStyles();
+const CurrentUser = () => {
+  const user = useSelector((state) => state.user);
 
-  const user = props.user || {};
+  const classes = useStyles();
 
   return (
     <Box className={classes.root}>
@@ -48,10 +48,4 @@ const CurrentUser = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  };
-};
-
-export default connect(mapStateToProps)(CurrentUser);
+export default CurrentUser;

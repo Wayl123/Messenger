@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 89,
-    marginBottom: 34,
+    height: "10%",
+    marginBottom: theme.spacing(2),
     boxShadow: "0 2px 20px 0 rgba(88,133,196,0.10)"
   },
   content: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   statusText: {
     fontSize: 12,
-    color: "#BFC9DB",
+    color: theme.palette.secondary.sub,
     letterSpacing: -0.17
   },
   statusDot: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#1CED84"
   },
   ellipsis: {
-    color: "#95A7C4",
+    color: theme.palette.secondary.sub,
     marginRight: 24,
     opacity: 0.5
   }
