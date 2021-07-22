@@ -35,6 +35,7 @@ export const fetchUser = () => async (dispatch) => {
   }
 };
 
+// Connect and emit, O(1)
 export const register = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/register", credentials);
@@ -109,6 +110,7 @@ const sendMessage = (data, body) => {
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
+// only calls the socket once so O(1)
 export const postMessage = (body) => async (dispatch) => {
   try {
     const data = await saveMessage(body);

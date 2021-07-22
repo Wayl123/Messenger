@@ -11,6 +11,9 @@ export const addMessageToStore = (state, payload) => {
     return [newConvo, ...state];
   }
 
+  // The scoket do call some dispatch function
+  // This one is more problematic since it is O(n+m) if considering id is unique
+  // O(nm) if not considering the if statement only passes once
   return state.map((convo) => {
     if (convo.id === message.conversationId) {
       const convoCopy = { ...convo };
@@ -24,6 +27,7 @@ export const addMessageToStore = (state, payload) => {
 };
 
 export const addOnlineUserToStore = (state, id) => {
+  // Mapping is O(n) although I don't really see good way to improve this
   return state.map((convo) => {
     if (convo.otherUser.id === id) {
       const convoCopy = { ...convo };
