@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 import { Sidebar } from "./index";
 import { searchUsers } from "../../store/utils/thunkCreators";
 import { clearSearchedUsers } from "../../store/conversations";
 
+const useStyles = makeStyles(() => ({
+  root: {
+    maxHeight: "100%",
+    overflow: "auto",
+  },
+}));
+
 const SidebarContainer = (props) => {
+  const classes = useStyles();
   const { searchUsers, clearSearchedUsers } = props;
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,7 +34,7 @@ const SidebarContainer = (props) => {
     setSearchTerm(event.target.value);
   };
 
-  return <Sidebar handleChange={handleChange} searchTerm={searchTerm} />;
+  return <Sidebar className={classes.root} handleChange={handleChange} searchTerm={searchTerm} />;
 };
 
 const mapDispatchToProps = (dispatch) => {

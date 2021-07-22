@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 89,
-    marginBottom: 34,
+    height: "10%",
+    marginBottom: "5%",
     boxShadow: "0 2px 20px 0 rgba(88,133,196,0.10)"
   },
   content: {

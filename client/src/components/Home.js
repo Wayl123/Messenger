@@ -11,7 +11,11 @@ import { clearOnLogout } from "../store/index";
 const styles = {
   root: {
     height: "97vh",
+    maxHeight: "97vh",
   },
+  matchHeight: {
+    maxHeight: "100%",
+  }
 };
 
 class Home extends Component {
@@ -53,8 +57,8 @@ class Home extends Component {
         </Button>
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
-          <SidebarContainer />
-          <ActiveChat />
+          <SidebarContainer className={classes.matchHeight}/>
+          <ActiveChat className={classes.matchHeight}/>
         </Grid>
       </>
     );
