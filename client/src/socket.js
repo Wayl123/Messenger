@@ -8,11 +8,11 @@ import {
 
 let socket;
 
-export const connect = () => {
+export const connect = (token) => {
   socket = io("http://localhost:3000", {
     autoConnect: false,
     auth: {
-      token: localStorage.getItem("messenger-token")
+      token: token
     }
   });
 
@@ -47,6 +47,8 @@ export const send = (action, data) => {
   socket.emit(action, data);
 };
 
-if (localStorage.getItem("messenger-token") !== null) {
-  connect();
+// For when refresh
+const refreshToken = localStorage.getItem("messenger-token")
+if (refreshToken !== null) {
+  connect(refreshToken);
 }
