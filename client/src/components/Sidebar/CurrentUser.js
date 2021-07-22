@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { BadgeAvatar } from "./index";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: 44,
     marginTop: 23,
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: 17
   },
   ellipsis: {
-    color: "#95A7C4",
+    color: theme.palette.secondary.sub,
     marginRight: 24,
     opacity: 0.5
   }

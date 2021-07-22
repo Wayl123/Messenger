@@ -22,19 +22,21 @@ const Home = (props) => {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const { user } = props;
+
   useEffect(() => {
-    props.fetchConversations(props.user)
-  },[props.user]);
+    props.fetchConversations(user)
+  },[user]);
 
   useEffect(() => {
     setIsLoggedIn(true)
-  },[props.user.id]);
+  },[user.id]);
 
   const handleLogout = async () => {
-    await props.logout(props.user.id);
+    await props.logout(user.id);
   };
 
-  if (!props.user.id) {
+  if (!user.id) {
     // If we were previously logged in, redirect to login instead of register
     if (isLoggedIn) return <Redirect to="/login" />;
     return <Redirect to="/register" />;
