@@ -59,4 +59,30 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// update all unread message from other user to read for a given conversation
+router.put("/read", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+    const { senderId, conversationId } = req.body
+
+    await Message.update(
+      {
+        read: true
+      },
+      {
+        where: {
+          conversationId: conversationId,
+          senderId: senderId,
+          read: false,
+        },
+      }
+    );
+    return res.sendStatus(204)
+  } catch (error) {
+    next(error);
+  }
+})
+
 module.exports = router;

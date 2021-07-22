@@ -5,6 +5,7 @@ import {
   removeOfflineUserFromStore,
   addMessageToStore,
   reorderConversationToTop,
+  resetUnread,
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -17,6 +18,7 @@ const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
 const REORDER_CONVERSATION = "REORDER_CONVERSATION";
+const READ_CONVERSATION = "READ_CONVERSATION";
 
 // ACTION CREATORS
 
@@ -69,10 +71,17 @@ export const addConversation = (recipientId, newMessage) => {
   };
 };
 
-export const reorderConversation = (conversations, conversationId) => {
+export const reorderConversation = (conversationId) => {
   return {
     type: REORDER_CONVERSATION,
-    payload: { conversations, conversationId },
+    conversationId,
+  };
+};
+
+export const readConversation = (conversationId) => {
+  return {
+    type: READ_CONVERSATION,
+    conversationId,
   };
 };
 
@@ -99,11 +108,9 @@ const reducer = (state = [], action) => {
         action.payload.newMessage
       );
     case REORDER_CONVERSATION:
-      return reorderConversationToTop(
-        state, 
-        action.payload.conversations, 
-        action.payload.conversationId
-      );
+      return reorderConversationToTop(state, action.conversationId);
+    case READ_CONVERSATION:
+      return resetUnread(state, action.conversationId);
     default:
       return state;
   }

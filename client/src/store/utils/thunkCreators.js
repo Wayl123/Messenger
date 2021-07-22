@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  readConversation,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -69,10 +70,20 @@ export const logout = (id) => async (dispatch) => {
 
 // CONVERSATIONS THUNK CREATORS
 
-export const fetchConversations = () => async (dispatch) => {
+const initializeUnread = (conversations, user) => {
+  return conversations.map((convo) => {
+    const convoCopy = { ...convo };
+    const unreadCount = convoCopy.messages.filter(message => (message.senderId !== user.id) && (!message.read)).length;
+    convoCopy.unreadCount = unreadCount;
+    return convoCopy
+  })
+}
+
+export const fetchConversations = (user) => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
-    dispatch(gotConversations(data));
+    const updatedData = initializeUnread(data, user)
+    dispatch(gotConversations(updatedData));
   } catch (error) {
     console.error(error);
   }
@@ -115,5 +126,14 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     dispatch(setSearchedUsers(data));
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const updateReadMessage = (body) => async (dispatch) => {
+  try {
+    await axios.put("/api/messages/read", {senderId: body.otherUser.id, conversationId: body.id});
+    dispatch(readConversation(body.id))
+  } catch (error) {
+    console.log(error);
   }
 };

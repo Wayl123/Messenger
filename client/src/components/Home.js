@@ -35,7 +35,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchConversations();
+    this.props.fetchConversations(this.props.user);
   }
 
   handleLogout = async () => {
@@ -78,8 +78,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(logout(id));
       dispatch(clearOnLogout());
     },
-    fetchConversations: () => {
-      dispatch(fetchConversations());
+    fetchConversations: (user) => {
+      dispatch(fetchConversations(user));
     },
   };
 };
