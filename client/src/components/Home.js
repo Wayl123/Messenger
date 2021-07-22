@@ -13,6 +13,9 @@ const styles = {
     height: "97vh",
     maxHeight: "97vh",
   },
+  logout: {
+    maxHeight: "3vh",
+  },
 };
 
 class Home extends Component {
