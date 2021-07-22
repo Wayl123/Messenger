@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CssBaseline, Button } from "@material-ui/core";
 import { SidebarContainer } from "./Sidebar";
@@ -18,14 +18,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Home = (props) => {
+const Home = () => {
+  const user = useSelector((state) => state.user);
+  
+  const dispatch = useDispatch();
+  const logoutClick = (id) => {
+    dispatch(logout(id));
+    dispatch(clearOnLogout());
+  }
+  const getConversations = (user) => {
+    dispatch(fetchConversations(user));
+  }
+
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { user } = props;
-
   useEffect(() => {
-    props.fetchConversations(user)
+    getConversations(user)
   },[user]);
 
   useEffect(() => {
@@ -33,7 +42,7 @@ const Home = (props) => {
   },[user.id]);
 
   const handleLogout = async () => {
-    await props.logout(user.id);
+    await logoutClick(user.id);
   };
 
   if (!user.id) {
@@ -57,26 +66,4 @@ const Home = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    conversations: state.conversations,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logout: (id) => {
-      dispatch(logout(id));
-      dispatch(clearOnLogout());
-    },
-    fetchConversations: (user) => {
-      dispatch(fetchConversations(user));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default Home;
