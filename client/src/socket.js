@@ -18,6 +18,7 @@ export const connect = (token) => {
 
   socket.on("connect_error", (err) => {
     console.log(err.message);
+    disconnect();
   });
   
   socket.on("connect", () => {
@@ -43,12 +44,7 @@ export const disconnect = () => {
   socket.disconnect();
 };
 
+// this is here because doesn't seem like I can export the socket
 export const send = (action, data) => {
   socket.emit(action, data);
 };
-
-// For when refresh
-const refreshToken = localStorage.getItem("messenger-token")
-if (refreshToken !== null) {
-  connect(refreshToken);
-}

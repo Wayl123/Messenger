@@ -27,6 +27,7 @@ export const fetchUser = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/auth/user");
     dispatch(gotUser(data));
+    connect(localStorage.getItem("messenger-token"))
     // send("go-online", data.id);
   } catch (error) {
     console.error(error);
