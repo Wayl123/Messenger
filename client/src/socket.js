@@ -10,13 +10,14 @@ let socket;
 
 export const connect = () => {
   socket = io("http://localhost:3000", {
-    transports: ["websocket"],
-    upgrade: false,
-    autoConnect: false
+    autoConnect: false,
+    auth: {
+      token: localStorage.getItem("messenger-token")
+    }
   });
 
-  socket.on("connect_error", () => {
-    socket.io.opts.transports = ["polling"];
+  socket.on("connect_error", (err) => {
+    console.log(err.message);
   });
   
   socket.on("connect", () => {
