@@ -8,7 +8,9 @@ const useStyles = makeStyles(() => ({
   root: {
     paddingLeft: 21,
     paddingRight: 21,
-    flexGrow: 1
+    flexGrow: 1,
+    maxHeight: "100%",
+    overflow: "auto",
   },
   title: {
     fontSize: 20,
@@ -16,7 +18,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: "bold",
     marginTop: 32,
     marginBottom: 15
-  }
+  },
 }));
 
 const Sidebar = (props) => {
