@@ -6,21 +6,45 @@ import {
   addOnlineUser,
 } from "./store/conversations";
 
-const socket = io(window.location.origin);
+let socket;
 
-socket.on("connect", () => {
-  console.log("connected to server");
-
-  socket.on("add-online-user", (id) => {
-    store.dispatch(addOnlineUser(id));
+export const connect = (token) => {
+  socket = io("http://localhost:3000", {
+    autoConnect: false,
+    auth: {
+      token: token
+    }
   });
 
-  socket.on("remove-offline-user", (id) => {
-    store.dispatch(removeOfflineUser(id));
+  socket.on("connect_error", (err) => {
+    console.error(err.message);
+    disconnect();
   });
-  socket.on("new-message", (data) => {
-    store.dispatch(setNewMessage(data.message, data.sender));
+  
+  socket.on("connect", () => {
+    console.log("connected to server");
+  
+    socket.on("add-online-user", (id) => {
+      store.dispatch(addOnlineUser(id));
+    });
+    socket.on("remove-offline-user", (id) => {
+      store.dispatch(removeOfflineUser(id));
+    });
+    socket.on("new-message", (data) => {
+      store.dispatch(setNewMessage(data.message, data.sender));
+    });
   });
-});
 
-export default socket;
+  socket.open();
+};
+
+export const disconnect = () => {
+  console.log("disconnected from server");
+
+  socket.disconnect();
+};
+
+// this is here because doesn't seem like I can export the socket
+export const send = (action, data) => {
+  socket.emit(action, data);
+};
