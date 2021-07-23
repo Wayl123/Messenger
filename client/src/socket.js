@@ -17,7 +17,7 @@ export const connect = (token) => {
   });
 
   socket.on("connect_error", (err) => {
-    console.log(err.message);
+    console.error(err.message);
     disconnect();
   });
   
