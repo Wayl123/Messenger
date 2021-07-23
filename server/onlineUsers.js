@@ -1,2 +1,3 @@
 const onlineUsers = new Set();
-module.exports = onlineUsers;
+const userSocket = new Map();
+module.exports = { onlineUsers, userSocket };
